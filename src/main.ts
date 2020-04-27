@@ -3,6 +3,7 @@ import * as camelcase from 'camelcase';
 export interface InputArgs {
   packageName: string;
   typeName: string;
+  parseFunc?: boolean;
 }
 
 interface PropData {
@@ -23,6 +24,16 @@ function goType(value: unknown): string {
 export default function gen(obj: object, args: InputArgs): string {
   let code = '';
   code += `package ${args.packageName}\n\n`;
+
+  if (args.parseFunc === true) {
+    code += `import (
+\t"encoding/json"
+\t"io/ioutil"
+)
+
+`;
+  }
+
   code += `// ${args.typeName} ...\n`;
   code += `type ${args.typeName} struct {\n`;
 
@@ -50,5 +61,26 @@ export default function gen(obj: object, args: InputArgs): string {
   }
 
   code += `}\n`;
+
+  if (args.parseFunc === true) {
+    code += '\n';
+    const parseFuncName = `Parse${args.typeName}`;
+    code += `// ${parseFuncName} reads a ${args.typeName} from a JSON file.
+func ${parseFuncName}(file string) (*${args.typeName}, error) {
+\tbytes, err := ioutil.ReadFile(file)
+\tif err != nil {
+\t\treturn nil, err
+\t}
+
+\tvar data ${args.typeName}
+\terr = json.Unmarshal(bytes, &data)
+\tif err != nil {
+\t\treturn nil, err
+\t}
+\treturn &data, nil
+}
+`;
+  }
+
   return code;
 }
