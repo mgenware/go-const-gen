@@ -1,5 +1,5 @@
 {
-  "name": "fx416",
+  "name": "go-const-gen",
   "version": "0.0.1",
   "description": "JSON to Go constants file",
   "main": "dist/main.js",
