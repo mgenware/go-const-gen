@@ -1,6 +1,6 @@
 {
   "name": "fx416",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "JSON to Go constants file",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
