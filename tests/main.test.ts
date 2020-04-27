@@ -35,3 +35,21 @@ it('parseFunc', async () => {
     'parseFunc',
   );
 });
+
+it('header', async () => {
+  await t(
+    {
+      hello: '1',
+      world: '2',
+      intProp: 123,
+      doubleProp: 12.3,
+    },
+    {
+      packageName: 'test',
+      typeName: 'Test',
+      parseFunc: true,
+      header: '/** This is a header. */\n',
+    },
+    'header',
+  );
+});
