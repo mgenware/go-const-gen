@@ -66,7 +66,7 @@ export default function gen(obj: object, args: InputArgs): string {
   if (args.parseFunc === true) {
     code += '\n';
     const parseFuncName = `Parse${args.typeName}`;
-    code += `// ${parseFuncName} reads a ${args.typeName} from a JSON file.
+    code += `// ${parseFuncName} loads a ${args.typeName} from a JSON file.
 func ${parseFuncName}(file string) (*${args.typeName}, error) {
 \tbytes, err := ioutil.ReadFile(file)
 \tif err != nil {

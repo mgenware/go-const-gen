@@ -13,7 +13,7 @@ type Test struct {
 	World      string  `json:"world"`
 }
 
-// ParseTest reads a Test from a JSON file.
+// ParseTest loads a Test from a JSON file.
 func ParseTest(file string) (*Test, error) {
 	bytes, err := ioutil.ReadFile(file)
 	if err != nil {
