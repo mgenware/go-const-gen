@@ -4,6 +4,7 @@ export interface InputArgs {
   packageName: string;
   typeName: string;
   parseFunc?: boolean;
+  header?: string;
 }
 
 interface PropData {
@@ -22,7 +23,7 @@ function goType(value: unknown): string {
 }
 
 export default function gen(obj: object, args: InputArgs): string {
-  let code = '';
+  let code = args.header ? args.header + '\n' : '';
   code += `package ${args.packageName}\n\n`;
 
   if (args.parseFunc === true) {
