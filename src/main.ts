@@ -20,7 +20,7 @@ function goType(value: unknown): string {
   throw new Error(`Unsupported type of value ${value}`);
 }
 
-export default function gen(obj: Object, args: InputArgs): string {
+export default function gen(obj: unknown, args: InputArgs): string {
   let code = '';
   code += `package ${args.packageName}\n\n`;
   code += `// ${args.typeName} ...\n`;
@@ -30,6 +30,7 @@ export default function gen(obj: Object, args: InputArgs): string {
   let maxTypeLen = 0;
   const sortedProps: PropData[] = [];
   for (const prop of Object.keys(obj).sort()) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const value = (obj as any)[prop];
     const propData: PropData = {
       prop,
