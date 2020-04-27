@@ -20,7 +20,7 @@ function goType(value: unknown): string {
   throw new Error(`Unsupported type of value ${value}`);
 }
 
-export default function gen(obj: unknown, args: InputArgs): string {
+export default function gen(obj: object, args: InputArgs): string {
   let code = '';
   code += `package ${args.packageName}\n\n`;
   code += `// ${args.typeName} ...\n`;

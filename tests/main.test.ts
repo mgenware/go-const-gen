@@ -3,7 +3,7 @@ import { promises as fsPromises } from 'fs';
 import * as nodepath from 'path';
 import convert, { InputArgs } from '../';
 
-async function t(obj: unknown, args: InputArgs, file: string) {
+async function t(obj: object, args: InputArgs, file: string) {
   // The compiled file is in "src/dist_tests" folder.
   const expectedFile = nodepath.join(__dirname, '../tests/data', `${file}.go`);
   const expected = await fsPromises.readFile(expectedFile, 'utf8');
