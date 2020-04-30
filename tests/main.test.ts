@@ -53,3 +53,21 @@ it('header', async () => {
     'header',
   );
 });
+
+it('injectValues', async () => {
+  await t(
+    {
+      hello: '1',
+      world: '2',
+      intProp: 123,
+      doubleProp: 12.3,
+    },
+    {
+      packageName: 'test',
+      typeName: 'Test',
+      parseFunc: true,
+      variableName: 'Var',
+    },
+    'injectValues',
+  );
+});

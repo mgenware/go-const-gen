@@ -5,11 +5,14 @@ export interface InputArgs {
   typeName: string;
   parseFunc?: boolean;
   header?: string;
+  variableName?: string;
 }
 
 interface PropData {
-  prop: string;
+  name: string;
+  namePascalCase: string;
   type: string;
+  value: unknown;
 }
 
 function goType(value: unknown): string {
@@ -45,8 +48,10 @@ export default function gen(obj: object, args: InputArgs): string {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const value = (obj as any)[prop];
     const propData: PropData = {
-      prop,
+      name: prop,
+      namePascalCase: camelcase(prop, { pascalCase: true }),
       type: goType(value),
+      value,
     };
     maxPropLen = Math.max(maxPropLen, prop.length);
     maxTypeLen = Math.max(maxTypeLen, propData.type.length);
@@ -54,11 +59,10 @@ export default function gen(obj: object, args: InputArgs): string {
   }
 
   for (const propData of sortedProps) {
-    const propName = camelcase(propData.prop, { pascalCase: true });
-    code += `\t${propName.padEnd(maxPropLen, ' ')} ${propData.type.padEnd(
-      maxTypeLen,
+    code += `\t${propData.namePascalCase.padEnd(
+      maxPropLen,
       ' ',
-    )} \`json:"${propData.prop}"\`\n`;
+    )} ${propData.type.padEnd(maxTypeLen, ' ')} \`json:"${propData.name}"\`\n`;
   }
 
   code += `}\n`;
@@ -81,6 +85,24 @@ func ${parseFuncName}(file string) (*${args.typeName}, error) {
 \treturn &data, nil
 }
 `;
+  }
+
+  if (args.variableName) {
+    code += '\n';
+    code += `// ${args.variableName} ...\n`;
+    code += `var ${args.variableName} *${args.typeName}\n\n`;
+    code += `func init() {\n`;
+    code += `\t${args.variableName} = &${args.typeName}{\n`;
+
+    for (const propData of sortedProps) {
+      code += `\t\t${(propData.namePascalCase + ':').padEnd(
+        maxPropLen + 1,
+        ' ',
+      )} ${JSON.stringify(propData.value)},\n`;
+    }
+
+    code += `\t}\n`;
+    code += `}\n`;
   }
 
   return code;
