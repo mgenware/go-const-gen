@@ -18,7 +18,7 @@ it('Basic', async () => {
       intProp: 123,
       doubleProp: 12.3,
     },
-    { packageName: 'test', typeName: 'Test' },
+    { packageName: 'test', typeName: 'Test', disableDefaultHeader: true },
     'basic',
   );
 });
@@ -31,7 +31,12 @@ it('parseFunc', async () => {
       intProp: 123,
       doubleProp: 12.3,
     },
-    { packageName: 'test', typeName: 'Test', parseFunc: true },
+    {
+      packageName: 'test',
+      typeName: 'Test',
+      parseFunc: true,
+      disableDefaultHeader: true,
+    },
     'parseFunc',
   );
 });
@@ -49,6 +54,7 @@ it('header', async () => {
       typeName: 'Test',
       parseFunc: true,
       header: '/** This is a header. */\n',
+      disableDefaultHeader: true,
     },
     'header',
   );
@@ -67,7 +73,26 @@ it('injectValues', async () => {
       typeName: 'Test',
       parseFunc: true,
       variableName: 'Var',
+      disableDefaultHeader: true,
     },
     'injectValues',
+  );
+});
+
+it('Default header', async () => {
+  await t(
+    {
+      hello: '1',
+      world: '2',
+      intProp: 123,
+      doubleProp: 12.3,
+    },
+    {
+      packageName: 'test',
+      typeName: 'Test',
+      parseFunc: true,
+      header: '/** This is a header. */\n',
+    },
+    'defaultHeader',
   );
 });
