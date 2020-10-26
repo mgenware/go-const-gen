@@ -7,6 +7,7 @@ export interface InputArgs {
   header?: string;
   variableName?: string;
   disableDefaultHeader?: boolean;
+  hideJSONTags?: boolean;
 }
 
 const defaultHeader = `/******************************************************************************************
@@ -70,10 +71,14 @@ export default function gen(obj: object, args: InputArgs): string {
   }
 
   for (const propData of sortedProps) {
-    code += `\t${propData.namePascalCase.padEnd(
-      maxPropLen,
-      ' ',
-    )} ${propData.type.padEnd(maxTypeLen, ' ')} \`json:"${propData.name}"\`\n`;
+    code += `\t${propData.namePascalCase.padEnd(maxPropLen, ' ')}`;
+    if (args.hideJSONTags) {
+      code += ` ${propData.type}\n`;
+    } else {
+      code += ` ${propData.type.padEnd(maxTypeLen, ' ')} \`json:"${
+        propData.name
+      }"\`\n`;
+    }
   }
 
   code += `}\n`;
