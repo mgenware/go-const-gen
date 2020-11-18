@@ -97,6 +97,24 @@ it('Default header', async () => {
   );
 });
 
+it('No JSON tag', async () => {
+  await t(
+    {
+      hello: '1',
+      world: '2',
+      intProp: 123,
+      doubleProp: 12.3,
+    },
+    {
+      packageName: 'test',
+      typeName: 'Test',
+      disableDefaultHeader: true,
+      hideJSONTags: true,
+    },
+    'noJSONTag',
+  );
+});
+
 it('Basic without formatting', async () => {
   await t(
     {
