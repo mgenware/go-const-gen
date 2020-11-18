@@ -7,6 +7,7 @@ export interface InputArgs {
   header?: string;
   variableName?: string;
   disableDefaultHeader?: boolean;
+  disablePropertyFormatting?: boolean;
 }
 
 const defaultHeader = `/******************************************************************************************
@@ -64,8 +65,10 @@ export default function gen(obj: object, args: InputArgs): string {
       type: goType(value),
       value,
     };
-    maxPropLen = Math.max(maxPropLen, prop.length);
-    maxTypeLen = Math.max(maxTypeLen, propData.type.length);
+    if (!args.disablePropertyFormatting) {
+      maxPropLen = Math.max(maxPropLen, prop.length);
+      maxTypeLen = Math.max(maxTypeLen, propData.type.length);
+    }
     sortedProps.push(propData);
   }
 
