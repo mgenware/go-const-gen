@@ -1,4 +1,4 @@
-import * as camelcase from 'camelcase';
+import camelcase from 'camelcase';
 
 export interface InputArgs {
   packageName: string;

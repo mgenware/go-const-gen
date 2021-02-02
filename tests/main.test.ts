@@ -7,7 +7,7 @@ async function t(obj: object, args: InputArgs, file: string) {
   // The compiled file is in "src/dist_tests" folder.
   const expectedFile = nodepath.join(__dirname, '../tests/data', `${file}.go`);
   const expected = await fsPromises.readFile(expectedFile, 'utf8');
-  assert.equal(convert(obj, args), expected);
+  assert.strictEqual(convert(obj, args), expected);
 }
 
 it('Basic', async () => {
