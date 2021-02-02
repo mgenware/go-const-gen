@@ -1,9 +1,12 @@
 import * as assert from 'assert';
 import { promises as fsPromises } from 'fs';
 import * as nodepath from 'path';
-import convert, { InputArgs } from '../';
+import convert, { InputArgs } from '../dist/main.js';
+import { fileURLToPath } from 'url';
 
-async function t(obj: object, args: InputArgs, file: string) {
+const __dirname = nodepath.dirname(fileURLToPath(import.meta.url));
+
+async function t(obj: Record<string, unknown>, args: InputArgs, file: string) {
   // The compiled file is in "src/dist_tests" folder.
   const expectedFile = nodepath.join(__dirname, '../tests/data', `${file}.go`);
   const expected = await fsPromises.readFile(expectedFile, 'utf8');
