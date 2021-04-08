@@ -18,7 +18,7 @@ const defaultHeader = `/********************************************************
 
 `;
 
-interface PropData {
+export interface PropData {
   name: string;
   namePascalCase: string;
   type: string;
@@ -35,10 +35,10 @@ function goType(value: unknown): string {
   throw new Error(`Unsupported type of value ${value}`);
 }
 
-export default function gen(
+export function goConstGenCore(
   obj: Record<string, unknown>,
   args: InputArgs,
-): string {
+): [string, PropData[]] {
   let code = args.disableDefaultHeader ? '' : defaultHeader;
   if (args.header) {
     code += args.header + '\n';
@@ -127,5 +127,15 @@ func ${parseFuncName}(file string) (*${args.typeName}, error) {
     code += `}\n`;
   }
 
+  return [code, sortedProps];
+}
+
+export function goConstGen(
+  obj: Record<string, unknown>,
+  args: InputArgs,
+): string {
+  const [code] = goConstGenCore(obj, args);
   return code;
 }
+
+export default goConstGen;

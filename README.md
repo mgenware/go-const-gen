@@ -11,10 +11,10 @@ yarn add go-const-gen
 ## Example
 
 ```ts
-import gen from 'go-const-gen';
+import goConstGen from 'go-const-gen';
 
 (async () => {
-  const result = await gen(
+  const result = await goConstGen(
     {
       hello: '1',
       world: '2',
