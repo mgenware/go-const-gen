@@ -5,7 +5,7 @@ JSON to Go constants.
 ## Installation
 
 ```sh
-yarn add go-const-gen
+npm i go-const-gen
 ```
 
 ## Example
