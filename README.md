@@ -1,3 +1,7 @@
+# Deprecated
+
+Moved to https://github.com/mgenware/qing-shared-const
+
 # go-const-gen
 
 JSON to Go constants.
